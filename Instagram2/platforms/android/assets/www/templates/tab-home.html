@@ -1,0 +1,59 @@
+<ion-view view-title="Instagram">
+    <ion-content ng-init="executeHttp()">
+        <ion-content>
+
+            <ion-list>
+                local posts
+                <div ng-repeat="picture in pictures">
+                    <ion-item href="#/tab/users/{{picture.userId}}" class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+                        <img ng-src="{{picture.face}}">
+                        <h2><b>{{picture.username}}</b></h2>
+                        <i class="icon ion-android-more-vertical"></i>
+                    </ion-item>
+                    <ion-item class="item item-image">
+                        <img ng-src="{{picture.pic}}">
+                    </ion-item>
+                    <ion-item>
+                        <a href="" class="button button-icon" ng-click="like({{picture.id}});"><i class="icon ion-android-favorite-outline under_picture_icon"></i></a><a href="" class="button button-icon" ng-click="toggleComBox()"><i class="icon ion-ios-chatbubble-outline under_picture_icon"></i></a>
+
+                            <p>
+                                <div ng-hide="comhide" class="comBox">
+                                    <input style="float: left;" type="text" placeholder="Write a comment..." onfocus="if (this.value == 'Write a comment...') { this.value = ''; }" data-ng-model="comment.text" />
+                                    <button style="float: right;" class="sendButton" ng-click="sendComment({{picture.id}});">></button>
+                                    <!--<button style="float: right;" class="sendButton" ng-click="test();">></button>-->
+                                </div>
+
+                                <div ng-if="picture.likes.length > 0">
+                                    <i class="icon ion-android-favorite"></i> <b>{{picture.likes}}</b>
+                                </div>
+
+                                <b>{{picture.username}}</b> {{picture.caption}}
+                                <div ng-if="picture.comments.length > 0" ng-repeat="comment in picture.comments"><b>damien</b> {{comment}}<br /></div>
+                            </p>
+</ion-item>
+                </div>
+                Place holder http data
+                <div ng-repeat="picture in items">
+                    <ion-item href="#/tab/users/{{picture.userId}}" class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+                        <img ng-src="{{picture.face}}">
+                        <h2><b>{{picture.username}}</b></h2>
+                        <i class="icon ion-android-more-vertical"></i>
+                    </ion-item>
+                    <ion-item class="item item-image">
+                        <img ng-src="{{picture.pic}}">
+                    </ion-item>
+                    <ion-item>
+                        <i  class="icon ion-android-favorite-outline under_picture_icon"></i><i class="icon ion-ios-chatbubble-outline under_picture_icon"></i><i class="icon ion-ios-redo-outline under_picture_icon"></i>
+                    </ion-item>
+                    <p>
+                        <div>
+                            <i class="icon ion-android-favorite"></i> <b>{{picture.likes}}</b>
+                        </div>
+                        <br />
+                        <b>{{picture.username}}</b> {{picture.caption}}
+                    </p>
+                </div>
+
+            </ion-list>
+        </ion-content>
+</ion-view>

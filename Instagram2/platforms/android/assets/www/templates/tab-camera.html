@@ -1,0 +1,16 @@
+<ion-view view-title="Photo">
+    <ion-content>
+        
+        <button class="button" ng-click="takePicture()">Take Picture</button>
+        <button class="button" ng-click="getPicture()">Open Gallery</button>
+        
+            <ion-item class="item item-image">
+                <img ng-src="{{picture}}">
+            </ion-item>
+        <div class="comBox">
+            <input style="float: left;" type="text" placeholder="Write a caption..." onfocus="if (this.value == 'Write a caption...') { this.value = ''; }" data-ng-model="caption.text" />
+            <button style="float: right;" class="sendButton" ng-click="sendPicture()">></button>
+</div>
+      
+    </ion-content>
+</ion-view>
