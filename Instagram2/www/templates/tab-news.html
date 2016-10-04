@@ -1,0 +1,31 @@
+<ion-view view-title="Chats">
+  <ion-content ng-init="follow_view=0">
+      <div>
+          <button class="following_you_button" ng-click="follow_view=1">FOLLOWING</button><button class="following_you_button" ng-click="follow_view=0">YOU</button>
+      </div>
+      <div ng-if="follow_view==1">
+          following view
+      </div>
+      <div ng-if="follow_view==0">
+          <ion-item class="item-remove-animate item-avatar item-icon-right">
+              <img ng-src="/img/adam.jpg">
+              <h2><b>Follow Requests</b></h2>
+              <p>Approve or ignore requests</p>
+              </ion-item>
+          <div>
+              <h4>RECENT</h4>
+              <hr />
+          </div>
+          <ion-list>
+              <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in allusers" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+                  <img ng-src="{{user.face}}">
+                  <p>
+                      <b>{{user.name}}</b> started following you.
+                  </p>
+                  <i class="icon ion-person-add icon-accessory"></i>
+              </ion-item>
+          </ion-list>
+</div>
+    
+  </ion-content>
+</ion-view>
