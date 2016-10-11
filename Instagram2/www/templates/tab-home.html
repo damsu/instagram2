@@ -1,9 +1,11 @@
-<ion-view view-title="Instagram">
+<ion-view cache-view="false" view-title="Instagram">
     <ion-content ng-init="executeHttp()">
         <ion-content>
-
+            <ion-refresher pulling-text="Pull to refresh..."
+                           on-refresh="doRefresh()">
+            </ion-refresher>
             <ion-list>
-                local posts
+                <!--local posts
                 <div ng-repeat="picture in pictures">
                     <ion-item href="#/tab/users/{{picture.userId}}" class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
                         <img ng-src="{{picture.face}}">
@@ -20,7 +22,7 @@
                                 <div ng-hide="comhide" class="comBox">
                                     <input style="float: left;" type="text" placeholder="Write a comment..." onfocus="if (this.value == 'Write a comment...') { this.value = ''; }" data-ng-model="comment.text" />
                                     <button style="float: right;" class="sendButton" ng-click="sendComment({{picture.id}});">></button>
-                                    <!--<button style="float: right;" class="sendButton" ng-click="test();">></button>-->
+                                    
                                 </div>
 
                                 <div ng-if="picture.likes.length > 0">
@@ -31,7 +33,7 @@
                                 <div ng-if="picture.comments.length > 0" ng-repeat="comment in picture.comments"><b>damien</b> {{comment}}<br /></div>
                             </p>
 </ion-item>
-                </div>
+                </div>-->
                 Place holder http data
                 <div ng-repeat="picture in items">
                     <ion-item href="#/tab/users/{{picture.userId}}" class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">

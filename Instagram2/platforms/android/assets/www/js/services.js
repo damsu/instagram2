@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['config'])
 
     .factory('DataService', function ($q, $http) {
 
@@ -16,7 +16,6 @@ angular.module('starter.services', [])
             }
         };
     })
-
     .factory('Users', function () {
         // Might use a resource here that returns a JSON array
 
@@ -25,37 +24,37 @@ angular.module('starter.services', [])
             id: 0,
             name: 'Ben Sparrow',
             face: 'img/ben.png',
-            followers: [1,2,3,4,5],
-            following: [1,2,3,4,5]
+            followers: [1, 2, 3, 4, 5],
+            following: [1, 2, 3, 4, 5]
         }, {
             id: 1,
             name: 'Max Lynx',
-            followers: [0,2,3,4,5],
+            followers: [0, 2, 3, 4, 5],
             following: [0, 2, 3, 4, 5],
             face: 'img/max.png'
         }, {
             id: 2,
             name: 'Adam Bradleyson',
-            followers: [0,1,3,4,5],
+            followers: [0, 1, 3, 4, 5],
             following: [0, 1, 3, 4, 5],
             face: 'img/adam.jpg'
         }, {
             id: 3,
             name: 'Perry Governor',
-            followers: [0,1,2,4,5],
+            followers: [0, 1, 2, 4, 5],
             following: [0, 1, 2, 4, 5],
             face: 'img/perry.png'
         }, {
             id: 4,
             name: 'Mike Harrington',
-            followers: [0,1,2,3,5],
+            followers: [0, 1, 2, 3, 5],
             following: [0, 1, 2, 3, 5],
             face: 'img/mike.png'
         }, {
             id: 5,
             name: 'damien',
-            face:'https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/10502074_10153145101446416_4071352603442079179_n.jpg?oh=72e67ed294c0bbb6c1bc585be5bf2c1b&oe=58654897',
-            followers: [0,1,2,3,4],
+            face: 'https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/10502074_10153145101446416_4071352603442079179_n.jpg?oh=72e67ed294c0bbb6c1bc585be5bf2c1b&oe=58654897',
+            followers: [0, 1, 2, 3, 4],
             following: [0, 1, 3]
         }];
 
@@ -76,6 +75,53 @@ angular.module('starter.services', [])
             }
         };
     })
+    .factory('User', function ($q, $http, API_ENDPOINT) {
+  
+        var user = null;
+
+        return {
+            login: function(username, password) {
+                return $q(function(resolve, reject){
+                    $http.post(API_ENDPOINT.url + "login", { username: username, password: password }).then(function (result) {
+                        if(result.status == 200)
+                        {
+                            user = { id: result.data.id, username: result.data.username };
+                            resolve();
+                        }
+                        else
+                        {
+                            reject();
+                        }
+                    }).catch(function(){
+                        reject();
+                    });
+                });
+            },
+            isLogged: function()
+            {
+                return $q(function(resolve, reject){
+                    if(user != null)
+                    {
+                        resolve();
+                    }
+                    else
+                    {
+                        reject();
+                    }
+                });
+            },
+            userId: function () {
+                return user;
+            },
+            register: function (username, password) {
+                $http.post(API_ENDPOINT.url + "register", { username: username, password: password });
+            
+            }
+        };
+    })
+            
+
+    
 
 
 

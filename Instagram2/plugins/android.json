@@ -27,6 +27,12 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.myappe6974b"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.myappe6974b"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "io.cordova.myappe6974b"
         }
     },
     "dependent_plugins": {

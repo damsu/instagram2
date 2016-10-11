@@ -1,5 +1,10 @@
-<ion-view view-title="damien">
-  <ion-content ng-init="executeHttp()">
+<ion-view cache-view="false" view-title="{{loggedUser.username}}">
+    <ion-nav-buttons side="right">
+        <button ng-click="toLogin()" class="button button-possitive">
+            Sign Out
+        </button>
+    </ion-nav-buttons>
+    <ion-content ng-init="executeHttp()">
       <br />
     <div class="row rowBorder">
         <div class="profilePicture">
@@ -53,7 +58,7 @@
           </div>
       </div>
       <div ng-if="picture_view==1">
-          <div ng-repeat="picture in pictures">
+          <!--<div ng-repeat="picture in pictures">
               <ion-item href="#/tab/users/{{picture.userId}}" class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
                   <img ng-src="{{picture.face}}">
                   <h2><b>{{picture.username}}</b></h2>
@@ -69,7 +74,7 @@
                       <div ng-hide="comhide" class="comBox">
                           <input style="float: left;" type="text" placeholder="Write a comment..." onfocus="if (this.value == 'Write a comment...') { this.value = ''; }" data-ng-model="comment.text" />
                           <button style="float: right;" class="sendButton" ng-click="sendComment({{picture.id}});">></button>
-                          <!--<button style="float: right;" class="sendButton" ng-click="test();">></button>-->
+                          
                       </div>
 
                       <div ng-if="picture.likes.length > 0">
@@ -80,24 +85,28 @@
                       <div ng-if="picture.comments.length > 0" ng-repeat="comment in picture.comments"><b>damien</b> {{comment}}<br /></div>
                   </p>
               </ion-item>
-          </div>
+          </div>-->
+          {{loggedUser.id}}
           <div ng-repeat="picture in items">
-              <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
-                  <img ng-src="https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/10502074_10153145101446416_4071352603442079179_n.jpg?oh=72e67ed294c0bbb6c1bc585be5bf2c1b&oe=58654897">
-                  <h2><b>damien</b></h2>
-                  <i class="icon ion-android-more-vertical"></i>
-              </ion-item>
-              <ion-item class="item item-image">
-                  <img ng-src="{{picture.pic}}">
-              </ion-item>
-              <ion-item>
-                  <i class="icon ion-android-favorite-outline under_picture_icon"></i><i class="icon ion-ios-chatbubble-outline under_picture_icon"></i><i class="icon ion-ios-redo-outline under_picture_icon"></i>
-              </ion-item>
-              <p>
-                  <i class="icon ion-android-favorite"></i> <b>{{picture.likes}} likes</b>
-                  <br />
-                  <b>damien</b> {{picture.caption}}
-              </p>
+              <div ng-if="picture.userId === loggedUser.id">
+                  <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+                      <img ng-src="https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/10502074_10153145101446416_4071352603442079179_n.jpg?oh=72e67ed294c0bbb6c1bc585be5bf2c1b&oe=58654897">
+                      <h2><b>{{loggedUser.username}}</b></h2>
+                      {{picture.userId}}
+                      <i class="icon ion-android-more-vertical"></i>
+                  </ion-item>
+                  <ion-item class="item item-image">
+                      <img ng-src="{{picture.pic}}">
+                  </ion-item>
+                  <ion-item>
+                      <i class="icon ion-android-favorite-outline under_picture_icon"></i><i class="icon ion-ios-chatbubble-outline under_picture_icon"></i><i class="icon ion-ios-redo-outline under_picture_icon"></i>
+                  </ion-item>
+                  <p>
+                      <i class="icon ion-android-favorite"></i> <b>{{picture.likes}} likes</b>
+                      <br />
+                      <b>{{loggedUser.username}}</b> {{picture.caption}}
+                  </p>
+              </div>
           </div>
       </div>
 

@@ -1,12 +1,14 @@
 // Ionic Starter App
-
+angular.module('config', []).constant('API_ENDPOINT', {
+    url: 'https://instagramdamien.herokuapp.com/'
+});
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-.run(function($ionicPlatform) {
+.run(function ($ionicPlatform, $rootScope, User, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +22,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
   });
+
+  //$rootScope.$on('$stateChangeError', function (e, toState, toParams, fromState, fromParams, error) {
+  //    $state.go("login");
+  //});
 })
 
 
@@ -37,21 +43,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // setup an abstract state for the tabs directive
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html',
+        resolve: {
+            islogged: function (User) {
+                return User.isLogged();
+            }
+        }
+    })
 
   // Each tab has its own nav history stack:
 
   .state('tab.camera', {
-    url: '/camera',
-    views: {
-      'tab-camera': {
-        templateUrl: 'templates/tab-camera.html',
-        controller: 'CameraCtrl'
+      url: '/camera',
+      views: {
+          'tab-camera': {
+              templateUrl: 'templates/tab-camera.html',
+              controller: 'CameraCtrl'
+          }
       }
-    }
   })
 
       .state('tab.home', {
@@ -77,30 +88,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('tab.news', {
       url: '/news',
       views: {
-        'tab-news': {
-          templateUrl: 'templates/tab-news.html',
-          controller: 'NewsCtrl'
-        }
+          'tab-news': {
+              templateUrl: 'templates/tab-news.html',
+              controller: 'NewsCtrl'
+          }
       }
-    })
+  })
     .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        url: '/chats/:chatId',
+        views: {
+            'tab-chats': {
+                templateUrl: 'templates/chat-detail.html',
+                controller: 'ChatDetailCtrl'
+            }
         }
-      }
     })
 
   .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      url: '/account',
+      views: {
+          'tab-account': {
+              templateUrl: 'templates/tab-account.html',
+              controller: 'AccountCtrl'
+          }
       }
-    }
   })
 
     .state('tab.followers', {
@@ -130,7 +141,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 templateUrl: 'templates/userpage.html',
                 controller: 'UsersCtrl'
             }
-            
+
         }
     })
 
@@ -144,12 +155,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         }
     })
-    ;
 
 
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl'
+    })
 
-  // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/account');
+    .state('register', {
+        url: '/register',
+        templateUrl: 'templates/register.html',
+        controller: 'RegisterCtrl'
+    });
+
+      //.state('register', {
+      //    url: '/register',    
+      //    templateUrl: 'templates/register.html',
+      //    controller: 'RegCtrl'
+      //});
+
+  
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/login');
 
     
 
