@@ -1,0 +1,38 @@
+<ion-view>
+
+    <ion-content >
+      
+        <div class="list card zeromargin" ng-repeat="post in posts">
+            <div class="item item-avatar">
+            <img ng-src="{{ post.User.profileImageSmall }}">
+            <h2 style="margin-top: 8px;">{{ post.User.username }}</h2>       
+            <button class="button button-outline button-positive button-small item-pull-right">
+                Follow
+            </button>   
+            </div>
+
+            <div class="item item-image">
+                <img ng-src="{{post.image}}">
+            </div>
+            
+            <div class="item">
+            <button class="icon button button-icon" ng-class="{'ion-ios-heart': post.userLike, 'ion-ios-heart-outline': !post.userLike}" ng-click="toggleLike(post)"></button>
+            <button class="icon button button-icon ion-ios-chatbubble-outline" ng-click="comment(post)"></button>            
+            <p>            
+                <i class="icon ion-ios-heart"></i> {{post.likes}} likes
+            </p>
+            <div>
+                <p>
+                    <b>{{post.User.username}}</b> <span ng-bind-html="post.caption"></span>
+                </p>
+                <a ng-if="post.Comments.length > 4" class="postTotalCommentIndicator" ng-click="comment(post)">
+                    View all {{ post.Comments.length }} comments
+                </a>
+                <p ng-repeat="c in post.Comments | limitTo:4">
+                    <b>{{c.User.username}}</b> {{c.text}}
+                </p>
+            </div>
+            </div>        
+        </div>
+    </ion-content>
+</ion-view>
