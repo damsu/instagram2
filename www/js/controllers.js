@@ -59,7 +59,11 @@ angular.module('someklone.controllers', [])
         });
     });    
 
-    $scope.toggleLike = function(post)
+    $scope.goToSearch = function (tag) {
+        $state.go('tab.browse-search',  { paramtag: tag, paramtabs: true } );
+    }
+
+    $scope.toggleLike = function (post)
     {
         Posts.toggleLike(post);
     }
@@ -88,7 +92,7 @@ angular.module('someklone.controllers', [])
     console.log($stateParams);
 })
 
-.controller('SearchCtrl', function($scope, $state, $ionicHistory, Users) {
+.controller('SearchCtrl', function($scope, $state, $ionicHistory, Users, Posts, $stateParams) {
 
     $scope.input = {
         searchText: ""
@@ -99,10 +103,15 @@ angular.module('someklone.controllers', [])
         tags: []
     };
 
+    $scope.input.searchtext = $state.params.paramtag;
+
     $scope.tabs = {
         people: true,
         tags: false
     };
+
+    //$scope.tabs.tags = $state.params.paramtabs;
+    //$scope.tabs.people = !$state.params.paramtabs;
 
     $scope.goBack = function()
     {
@@ -139,7 +148,9 @@ angular.module('someklone.controllers', [])
         }
         else // search for posts with tags
         {
-
+            Posts.searchTag($scope.input.searchText).then(function (result) {
+                $scope.searchResults.tags = result;
+            });
         }
     };
 })

@@ -12,11 +12,12 @@ angular.module('someklone.services').factory('Posts', function($q, $http, appCon
             return $q(function(resolve, reject){
                 $http.get(appConfig.apiAddr + "posts").then(function(response){
 
-                    /*var posts = response.data.map(function(elem){                        
+                    var posts = response.data.map(function(elem){                        
                         var replacePattern1 = /(^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
-                        elem.caption = elem.caption.replace(replacePattern1, '$1<a href="https://twitter.com/search?q=$2">#$2</a>');
+                        elem.caption = elem.caption.replace(replacePattern1, '$1<a ng-click="goToSearch("$2")">#$2</a>');
+                        console.log(elem.caption);
                         return elem;
-                    });*/
+                    });
 
                     resolve(response.data);
                 },function(err){
@@ -32,10 +33,25 @@ angular.module('someklone.services').factory('Posts', function($q, $http, appCon
             });
         },
         // search posts based on tags
-        searchTag: function()
+        searchTag: function(searchWord)
         {
-            return $q(function(resolve, reject){
-                resolve(posts);
+            var upperCaseSearchWord = '#' + searchWord.toUpperCase();
+            return $q(function (resolve, reject) {
+                return $http.get(appConfig.apiAddr + "posts").then(function (response) {
+
+                    console.log(response.data);
+                    if (searchWord.length > 0) {
+                        var matches = response.data.filter(function (p) {
+                            var testString = p.caption.toUpperCase();
+                            return testString.includes(upperCaseSearchWord);
+                        });
+
+                        resolve(matches);
+                    }
+                    else {
+                        reject();
+                    }
+                });
             });
         },
         // get all posts of single user

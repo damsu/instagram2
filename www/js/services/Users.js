@@ -1,4 +1,4 @@
-angular.module('someklone.services').factory('Users', function($q, appConfig) {
+angular.module('someklone.services').factory('Users', function($q, $http, appConfig) {
     
     /* Temporary users */
     var users = [
@@ -24,23 +24,26 @@ angular.module('someklone.services').factory('Users', function($q, appConfig) {
 
     return {
         searchUser: function(searchWord) {
-            
-            var upperCaseSearchWord = searchWord.toUpperCase();
-            return $q(function(resolve, reject){
-                if(searchWord.length > 0)
-                {
-                    var matches = users.filter(function(u){
-                        var testString = u.username.toUpperCase();                        
-                        return testString.includes(upperCaseSearchWord);                    
-                    });
+          
 
-                    resolve(matches);
-                }
-                else
-                {
-                    reject();
-                }
-            });            
+            var upperCaseSearchWord = searchWord.toUpperCase();
+            return $q(function (resolve, reject) {
+                return $http.get(appConfig.apiAddr + "users").then(function (response) {
+                    
+                    console.log(response.data);
+                    if (searchWord.length > 0) {
+                        var matches = response.data.filter(function (u) {
+                            var testString = u.username.toUpperCase();
+                            return testString.includes(upperCaseSearchWord);
+                        });
+
+                        resolve(matches);
+                    }
+                    else {
+                        reject();
+                    }
+                });
+            });
         },
         getOne: function(key)
         {

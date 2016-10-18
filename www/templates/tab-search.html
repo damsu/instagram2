@@ -29,11 +29,17 @@
         </div>
         <div ng-if="tabs.tags">
             <div class="list">
-                <a class="item item-avatar" href="#">
-                <i class="icon ion-pound"></i>
-                <h2>#tupac</h2>
-                <p>87,345 posts</p>
-                </a>
+                <div class="row" ng-repeat="picture in searchResults.tags" ng-if="$index % 3 === 0">
+                    <div class="col col-33 colNoPadding" ng-if="$index < searchResults.tags.length">
+                        <a href="#/tab/users/5/{{searchResults.tags[$index].id}}"><img ng-src="{{searchResults.tags[$index].imageThumbnail}}" width="100%" /></a>
+                    </div>
+                    <div class="col col-33 colNoPadding" ng-if="$index + 1 < searchResults.tags.length">
+                        <a href="#/tab/users/5/{{searchResults.tags[$index + 1].id}}"><img ng-src="{{searchResults.tags[$index + 1].imageThumbnail}}" width="100%" /></a>
+                    </div>
+                    <div class="col col-33 colNoPadding" ng-if="$index + 2 < searchResults.tags.length">
+                        <a href="#/tab/users/5/{{searchResults.tags[$index + 2].id}}"><img ng-src="{{searchResults.tags[$index + 2].imageThumbnail}}" width="100%" /></a>
+                    </div>
+                </div>
             </div>
         </div>
     </ion-content>

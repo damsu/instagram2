@@ -1,6 +1,6 @@
 
 angular.module('someklone.config', []).constant('appConfig', {
-        "apiAddr": "http://someklone.herokuapp.com/"
+    "apiAddr": "https://instagramdamien.herokuapp.com/"
 });
 
 // Declare the services module
@@ -92,11 +92,16 @@ angular.module('someklone', ['ionic', 'someklone.controllers', 'someklone.servic
   })
 
   .state('tab.browse-search', {
-    url: '/search',
+      url: '/search',
+      params: {
+          paramtag: null,
+          paramtabs: null
+      },
       views: {
         'tab-browse': {
           templateUrl: 'templates/tab-search.html',
           controller: 'SearchCtrl'
+          
       }
     }
   })  
